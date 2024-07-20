@@ -42,6 +42,6 @@ function rsiTradingView(ohlcv, period = 14){
   const rsi = rs.map(value => 100 - 100 / (1 + value));
 
   // Return the RSI values rounded to 2 decimal places
-  return rsi.map(value => +(Math.round(value * 100) / 100));
+  return rsi.map(value => +(Math.round((value + Number.EPSILON) * 100) / 100));
 }
 
