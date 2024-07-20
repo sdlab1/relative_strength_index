@@ -6,6 +6,7 @@ source: https://github.com/lukaszbinden/rsi_tradingview/blob/main/rsi.py
 
 converting to javascript
 
+```
 pine_sma(x, y) =>
     sum = 0.0
     for i = 0 to y - 1
@@ -24,3 +25,4 @@ pine_rsi(x, y) =>
     rs = pine_rma(u, y) / pine_rma(d, y)
     res = 100 - 100 / (1 + rs)
     res
+```
