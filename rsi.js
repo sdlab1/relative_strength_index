@@ -1,13 +1,20 @@
 function rsiTradingView(ohlcv, period = 14){
-  const data = ohlc.map(value => value.close);
+  // Initialize arrays for gains and losses
+  const up = [];
+  const down = [];
 
-  // Calculate the difference between consecutive closing prices
-  const delta = data.map((value, index) => index === 0 ? 0 : value - data[index - 1]);
-
-  // Calculate the gains (upward changes) and losses (downward changes)
-  const up = delta.map(value => Math.max(value, 0));
-  const down = delta.map(value => Math.max(-value, 0));
-
+  // Calculate the gains and losses
+  for (let i = 1; i < ohlcv.length; i++) {
+    const change = ohlcv[i].close - ohlcv[i - 1].close;
+    if (change >= 0) {
+      up.push(change);
+      down.push(0);
+    } else {
+      up.push(0);
+      down.push(-change);
+    }
+  }
+  
   // Helper function to calculate the RMA
   const rma = (values, period) => {
     const alpha = 1 / period;
