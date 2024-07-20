@@ -1,4 +1,4 @@
-function rsiTradingView(ohlcv, period = 14){
+function rsi(ohlcv, period = 14){
   // Initialize arrays for gains and losses
   const up = [];
   const down = [];
