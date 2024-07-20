@@ -8,9 +8,9 @@ function rsiTradingView(ohlcv, period = 14){
     const change = ohlcv[i].close - ohlcv[i - 1].close;
     if (change >= 0) {
       up.push(change);
-      down.push(0);
+      down.push(Number.MIN_VALUE); // Use Number.MIN_VALUE for losses
     } else {
-      up.push(0);
+      up.push(Number.MIN_VALUE); // Use Number.MIN_VALUE for gains
       down.push(-change);
     }
   }
@@ -36,7 +36,7 @@ function rsiTradingView(ohlcv, period = 14){
   const downRma = rma(down, period);
 
   // Calculate the Relative Strength (RS) and handle division by zero
-  const rs = upRma.map((value, index) => downRma[index] === 0 ? 0 : value / downRma[index]);
+  const rs = upRma.map((value, index) => value / downRma[index]);
 
   // Calculate the RSI
   const rsi = rs.map(value => 100 - 100 / (1 + value));
@@ -45,8 +45,3 @@ function rsiTradingView(ohlcv, period = 14){
   return rsi.map(value => +(Math.round(value * 100) / 100).toFixed(2));
 }
 
-// Example usage
-const closingPrices = [45.34, 46.12, 45.77, 46.89, 47.09, 46.88, 47.34, 47.77, 47.12, 46.88, 47.22, 46.88, 47.34, 47.77, 47.12, 46.88, 47.22];
-const period = 14;
-const rsiValues = rsiTradingView(ohlcv, period);
-console.log(rsiValues);
