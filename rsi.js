@@ -8,9 +8,9 @@ function rsiTradingView(ohlcv, period = 14){
     const change = ohlcv[i].close - ohlcv[i - 1].close;
     if (change >= 0) {
       up.push(change);
-      down.push(Number.MIN_VALUE); // Use Number.MIN_VALUE for losses
+      down.push(Number.MIN_VALUE); // Number.MIN_VALUE as zero
     } else {
-      up.push(Number.MIN_VALUE); // Use Number.MIN_VALUE for gains
+      up.push(Number.MIN_VALUE); // Number.MIN_VALUE as zero
       down.push(-change);
     }
   }
