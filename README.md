@@ -6,6 +6,7 @@ source: https://github.com/lukaszbinden/rsi_tradingview/blob/main/rsi.py
 
 converting to javascript
 
+it should do this:
 ```
 pine_sma(x, y) =>
     sum = 0.0
