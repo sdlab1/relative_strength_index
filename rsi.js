@@ -23,25 +23,27 @@ function mathmx(arg1, arg2) {
   if (arg2 > arg1) return arg2;
   return arg1;
 }
-function rsi(ohlcv, period = 14){
+export function rsi(ohlcv, period = 14){
   // Initialize arrays for gains and losses
   const up = [];
   const down = [];
-
   // Calculate the gains and losses
   for (let i = 1; i < ohlcv.length; i++) { //Number.MIN_VALUE as zero
-	  const change = ohlcv[i].close - ohlcv[i - 1].close;
-	  up.push( change > Number.MIN_VALUE ? change : Number.MIN_VALUE );
-	  down.push( -change > Number.MIN_VALUE ? -change : Number.MIN_VALUE );
+    const change = ohlcv[i].close - ohlcv[i - 1].close;
+      up.push( change > Number.MIN_VALUE ? change : Number.MIN_VALUE );
+      down.push( -change > Number.MIN_VALUE ? -change : Number.MIN_VALUE );
   }
   // Calculate the RMA of gains and losses
   const upRma = rma(up, period);
   const downRma = rma(down, period);
-
+  const round2 = (val) =>  Math.round((val + Number.EPSILON) * 100) / 100;
   // Calculate the Relative Strength Index
-  const rsi = upRma.map((value, index) => 100 - 100 / (1 + (value / downRma[index]) ));
-
+	  const rsi = upRma.map((upVal, index) => {
+		    const downVal = downRma[index];
+		    const rs = upVal / downVal;
+		    return round2(100 - 100 / (1 + rs));
+    });
   // Return the RSI values rounded to 2 decimal places
-  return rsi.map(value => Math.round((value + Number.EPSILON) * 100) / 100);
+  return rsi;
 }
 
