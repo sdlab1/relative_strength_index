@@ -4,15 +4,12 @@ function rsi(ohlcv, period = 14){
   const down = [];
 
   // Calculate the gains and losses
-  for (let i = 1; i < ohlcv.length; i++) {
+  for (let i = 1; i < ohlcv.length; i++) { //branchless; Number.MIN_VALUE as zero
     const change = ohlcv[i].close - ohlcv[i - 1].close;
-    if (change >= 0) {
-      up.push(change);
-      down.push(Number.MIN_VALUE); // Number.MIN_VALUE as zero
-    } else {
-      up.push(Number.MIN_VALUE); // Number.MIN_VALUE as zero
-      down.push(-change);
-    }
+    const upValue = Math.max(change, Number.MIN_VALUE); // Equivalent to if (change >= 0) { change } else { Number.MIN_VALUE }
+    const downValue = Math.max(-change, Number.MIN_VALUE); // Equivalent to if (change < 0) { -change } else { Number.MIN_VALUE }
+    up.push(upValue);
+    down.push(downValue);
   }
   
   function rma(values, period){
