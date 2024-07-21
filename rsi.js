@@ -31,10 +31,8 @@ function rsi(ohlcv, period = 14){
   // Calculate the gains and losses
   for (let i = 1; i < ohlcv.length; i++) { //Number.MIN_VALUE as zero
     const change = ohlcv[i].close - ohlcv[i - 1].close;
-    const upValue = mathmx(change, Number.MIN_VALUE);
-    const downValue = mathmx(-change, Number.MIN_VALUE);
-    up.push(upValue);
-    down.push(downValue);
+	up.push( mathmx(change, Number.MIN_VALUE) );
+	down.push( mathmx(-change, Number.MIN_VALUE) );
   }
   // Calculate the RMA of gains and losses
   const upRma = rma(up, period);
