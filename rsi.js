@@ -1,4 +1,6 @@
-function mathmx(arg1, arg2) {
+function mathmx(arg1, arg2) { 
+  //since we have only 2 args and 1 is for sure greater
+  //and both are numbers no need for Math.max. This is the way.
   if (arg2 > arg1) return arg2;
   return arg1;
 }
