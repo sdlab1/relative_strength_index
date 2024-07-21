@@ -18,15 +18,9 @@ function rsi(ohlcv, period = 14){
   function rma(values, period){
     const alpha = 1 / period;
     const rmaArray = [];
-    let prevRma = values.slice(0, period).reduce((acc, val) => acc + val, 0) / period;
-    rmaArray.push(prevRma);
-
-    for (let i = period; i < values.length; i++) {
-      const newRma = alpha * values[i] + (1 - alpha) * prevRma;
-      rmaArray.push(newRma);
-      prevRma = newRma;
-    }
-
+    rmaArray.push(values.slice(0, period).reduce((acc, val) => acc + val, 0) / period);
+    for (let i = period; i < values.length; i++)
+      rmaArray.push(alpha * values[i] + (1 - alpha) * rmaArray[rmaArray.length-1]);
     return rmaArray;
   }
 
