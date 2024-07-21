@@ -15,8 +15,7 @@ function rsi(ohlcv, period = 14){
     }
   }
   
-  // Helper function to calculate the RMA
-  const rma = (values, period) => {
+  function rma(values, period){
     const alpha = 1 / period;
     const rmaArray = [];
     let prevRma = values.slice(0, period).reduce((acc, val) => acc + val, 0) / period;
@@ -29,17 +28,14 @@ function rsi(ohlcv, period = 14){
     }
 
     return rmaArray;
-  };
+  }
 
   // Calculate the RMA of gains and losses
   const upRma = rma(up, period);
   const downRma = rma(down, period);
 
-  // Calculate the Relative Strength (RS) and handle division by zero
-  const rs = upRma.map((value, index) => value / downRma[index]);
-
-  // Calculate the RSI
-  const rsi = rs.map(value => 100 - 100 / (1 + value));
+  // Calculate the Relative Strength Index
+  const rsi = upRma.map((value, index) => 100 - 100 / (1 + (value / downRma[index]) ));
 
   // Return the RSI values rounded to 2 decimal places
   return rsi.map(value => Math.round((value + Number.EPSILON) * 100) / 100);
