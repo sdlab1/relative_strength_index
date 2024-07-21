@@ -1,3 +1,7 @@
+function mathmx(arg1, arg2) {
+  if (arg2 > arg1) return arg2;
+  return arg1;
+}
 function rsi(ohlcv, period = 14){
   // Initialize arrays for gains and losses
   const up = [];
@@ -6,8 +10,8 @@ function rsi(ohlcv, period = 14){
   // Calculate the gains and losses
   for (let i = 1; i < ohlcv.length; i++) { //branchless; Number.MIN_VALUE as zero
     const change = ohlcv[i].close - ohlcv[i - 1].close;
-    const upValue = Math.max(change, Number.MIN_VALUE); // Equivalent to if (change >= 0) { change } else { Number.MIN_VALUE }
-    const downValue = Math.max(-change, Number.MIN_VALUE); // Equivalent to if (change < 0) { -change } else { Number.MIN_VALUE }
+    const upValue = mathmx(change, Number.MIN_VALUE); // Equivalent to if (change >= 0) { change } else { Number.MIN_VALUE }
+    const downValue = mathmx(-change, Number.MIN_VALUE); // Equivalent to if (change < 0) { -change } else { Number.MIN_VALUE }
     up.push(upValue);
     down.push(downValue);
   }
