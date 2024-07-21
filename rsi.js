@@ -8,14 +8,14 @@ function rma(values, period){
   }
 // in basic.js:
 export function rma(arr, period) { //running moving average
-    const arrout = [];
-	let tmp = 0;
-    for(let i = 0; i < period; i++)
-        tmp += arr[i];
-    arrout[0] = tmp / period; //1st sma value
-    for(let i = period, j = 1, alpha = 1 / period; i < arr.length; i++, j++)
-        arrout[j] = arr[i] * alpha + (1 - alpha) * arrout[j-1];
-    return arrout;
+	const arrout = [];
+	arrout[0] = 0;
+	for(let i = 0; i < period; i++)
+	arrout[0] += arr[i];
+	arrout[0] /= period; //1st sma value
+	for(let i = period, j = 1, alpha = 1 / period; i < arr.length; i++, j++)
+		arrout[j] = arr[i] * alpha + (1 - alpha) * arrout[j-1];
+	return arrout;
 }
 function mathmx(arg1, arg2) { 
   //since we have only 2 args and 1 is for sure greater
