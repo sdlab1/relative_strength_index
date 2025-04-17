@@ -114,10 +114,10 @@ impl WilderRSI {
             // Используем сохраненные ПРЕДЫДУЩИЕ средние (prev_avg_gain/loss)
             // и НОВЫЙ прирост/падение (new_gain/loss)
             if self.prev_avg_gain.is_none() || self.prev_avg_loss.is_none() {
-                println!("Предупреждение: Не удалось пересчитать RSI при обновлении в момент инициализации. Отсутствуют prev_avg_*. Возвращено предыдущее значение RSI.");
+                //println!("Info: Обновление цены сразу после инициализации RSI игнорируется, так как отсутствуют предыдущие средние. RSI не пересчитан.");
                 *self.prices.back_mut().unwrap() = close; // Обновляем цену в VecDeque
                 self.last_close = Some(close); // Обновляем цену в состоянии
-                return self.calculate_rsi(); // Вернуть старое значение
+                return None; // Вернуть старое значение
             }
 
             // Стандартный пересчет при обновлении:
